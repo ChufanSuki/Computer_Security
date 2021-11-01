@@ -1,0 +1,162 @@
+\documentclass[11 pt]{scrartcl}
+\usepackage[header, margin, koma, stylish]{chen}
+\usepackage{csquotes}
+\usepackage{caption}
+\usepackage{todonotes}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[l]{CS 161 Notes}
+\fancyhead[r]{Chufan Chen}
+\cfoot{\thepage}
+
+\newcommand{\tx}{\tilde{x}}
+\newcommand{\eq}{\text{eq}}
+\newcommand{\opt}{\text{opt}}
+\newcommand{\nz}{\text{nz}\,}
+\newcommand{\epi}{\text{epi}\;}
+
+\begin{document} 
+\title{\Large CS 161: Computer Security}
+\author{\large Chufan Chen}
+\date{\large\today}
+
+\maketitle 
+
+\begin{center}
+\begin{displayquote}
+    \emph{"A good stock of examples, as large as possible, is indispensable for a thorough understanding of any concept, and when I want to learn something new, I make it my first job to build one."} \\ \begin{flushright} \emph{– Paul Halmos}.  \end{flushright}
+\end{displayquote}
+\begin{displayquote}
+    \emph{"Constrained optimization is the art of compromise between conflicting objectives."} \\ \begin{flushright} \emph{– William A. Dembski}.  \end{flushright}
+\end{displayquote}
+\end{center}
+
+
+These are course notes for the Spring 2021 rendition of EECS 127, Optimization Models in Engineering, taught by Professor Laurent El Ghaoui.
+
+\tableofcontents 
+
+\newpage
+
+\section{Wednesday, August 25th: Introduction}
+\subsection{Course Outline}
+\itemnum
+    \ii Introduction to Security
+    \ii Memory Safety
+    \ii Cryptography
+    \ii Web Security
+    \ii Network Security
+    \ii Miscellaneous Topics
+\itemend
+
+\subsection{What is Security}
+Security enforcing a desired property in the presence of an attacker. These property includes:
+\itemnum
+    \ii data confidentiality
+    \ii user privacy
+    \ii data and computation integrity
+    \ii authentication
+    \ii avaliablity
+\itemend
+Security is important for our
+\itemnum
+    \ii physical safety
+    \ii confidentiality/privacy
+    \ii functionality
+    \ii protecting our assets
+    \ii successful business
+    \ii a country’s economy and safety
+\itemend
+Everthing is hackable, especially things connected to the Internet.\newline
+What will you learn in this class?
+\itemnum
+    \ii How to think adversarially about computer systems
+    \ii How to assess threats for their significance
+    \ii How to build programs \& systems with robust security properties
+    \ii How to gauge the protections and limitations provided by today's technology
+    \ii How attacks work in practice
+\itemend
+The rest of this lecture is largely focused on philosophical issues.
+\itemnum
+    \ii People and Money
+    \ii Threat Model
+\itemend
+\subsection{People and Money}
+People attack systems for some reason. Often the most effective security is to attack the attacker's motivation.\newline
+It All Comes Down to People... \newline
+The Attackers\newline
+People attack systems for some reason\newline
+No attackers? No problem!
+\itemnum
+    \ii They may do it for money
+    \ii They may do it for politics
+    \ii They may do it for the lulz
+    \ii They may just want to watch the world burn
+\itemend
+\subsection{Threat Model}
+For personal security, it best described by threat model and chill.\newline
+Threat Model is about who and why might someone attack you? 
+\itemnum
+    \ii Criminals for money
+    \ii Teenagers for laughs or to win in an online game
+    \ii Governments
+    \ii Intimate partners threat
+\itemend
+We talked a lot about threat model because when you think about secuity you shouldn't just ask yourself this binary question is it secure or not but secuity  against who, secure against what, what types of attackers, who might be
+trying to attack your system, what might their motivation be, what might their
+resources and their capabilities be, and we often don't need to defend against everyone maybe there's just some subset of people we need to defend against.
+Often the most effective security is to attack the reasons for an attacker.\newline
+It All Comes Down to People... \newline
+The Users\newline
+Have you ever sacrificed your own personal security for the sake of usability?
+\itemnum
+    \ii If a security system is unusable it will be unused
+    \ii Users will subvert systems anyway
+    \ii Programmers will make mistakes
+    \ii Social Engineering
+\itemend
+But don't blame the Users
+\itemnum
+    \ii Often we blame the user when an attacker takes advantage of them.
+    \ii Phishing is a classic example
+\itemend
+Security often comes down comes down to money 
+\itemnum
+    \ii "You don't put a \$10 lock on a \$1 rock Unless the attacker can leverage that \$1 rock to attack something more important
+    \ii "You don't risk exposing a \$1M zero-day on a nobody"
+    \ii Cost/benefit analyses appear all throughout security
+\itemend
+\textbf{Prevention}\newline
+The goal of prevention is to stop the "bad thing" from happening at all. On one hand, if prevention works its great. E.g. if you don't write in an unsafe language (like C) you will never worry about buffer overflow exploits. On the other hand, if you can only depend on prevention. You get Bitcoin and Bitcoin thefts.\newline
+\textbf{Detection and Response}\newline
+Detection: See that something is going wrong\newline
+Response: Actually do something about it\newline
+False Positive and False Negatives\newline
+False positive: You alert when there is nothing there \newline
+False negative: You fail to alert when something is there \newline
+This is the real cost of detection:\newline
+Responding to false positives is not free. And too many false positives and alarms get removed.False negatives mean a failure.\newline
+\textbf{Defense in Depth}\newline
+The notion of layering multiple types of protection together. Hypothesis is that attackers needs to breech all the defenses. But defense in depth isn't free. You are throwing more resources at the problem. You can have a incresead false positive rate.\newline
+\textbf{Mitigation and Recovery}
+The bad things happened, can we get back on our feet. Assumption: bad things will happen in the system, so can we design things so we can get back working? Back it up!\newline
+\textbf{Password}\newline
+Humans can't remember good passwords.\newline
+Something you know. Password\newline
+Something you have. RSA token\newline
+Something you are. Fingerprint\newline
+So what to do? Password Managers! E.g. 1Password\newline
+And FIDO U2F Security Keys is a very powerful second-factor for 2-factor authentication. This can not be phished.
+\newpage
+\section{Wednesday, August 25th: Security Principles}
+
+
+
+\section{Appendix}
+\renewcommand{\listtheoremname}{List of Definitions and Theorems}
+\listoftheorems[ignoreall,show={theorem,definition}]
+
+\listoftodos
+
+\end{document}
