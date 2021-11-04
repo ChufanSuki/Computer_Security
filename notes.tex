@@ -147,10 +147,18 @@ Something you are. Fingerprint\newline
 So what to do? Password Managers! E.g. 1Password\newline
 And FIDO U2F Security Keys is a very powerful second-factor for 2-factor authentication. This can not be phished.
 \newpage
-\section{Wednesday, August 25th: Security Principles}
-
-
-
+\section{Thursday, November 4th: Security Principles}
+\subsection{The Properties We Want in a Safe}
+We want the inside to be inaccessible to an attacker. But what \textbf{sort} of attacker? And \textbf{how much time does} the attacker have? We want to measure how much time \& capabilities needed for an attacker. For a safe, ratings communicate how much based on experts performing the attack. Such secuirty ratings are much harder in the computer security side.
+\begin{example}
+    Security Rating: A Real Safe\newline
+    TL-15(\$3,000): An expert with common tools will take $\ge 15$ minutes to break in. May even have "relockers".\newline
+    TLRTL-30(\$10,000): 30 minutes with common tools and a cutting torch.\newline
+    Gun Safe: Meets the California requirements for safe storage of a handgun. But it is practically snake oil. It create an iluusion of security. It meets the legal requirement for security.
+\end{example}
+Lesson from safe: Security is economics. More security costs more. Standards often define security.\newline
+We've seen that laptop/desktop platforms grant application a lot of privilege. \newline
+\textbf{Thinking About Least Privilege}\newline When assessing the security of a system's design, identify the Trusted Computing Base(TCB). What components deos secuirty rely upon? Security requires that the TCB: correct, comlete(can't be bypassed) and secure(can't be tampered with). Best way to be assured of correctness and its security are KISS(Keep It Simple, Stupid) and Generally, Simple(Small). One powerfuldesign approach: privilege separation. Isolate privileged operations to as small a component as possible.
 \section{Appendix}
 \renewcommand{\listtheoremname}{List of Definitions and Theorems}
 \listoftheorems[ignoreall,show={theorem,definition}]
