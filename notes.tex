@@ -141,6 +141,11 @@ The notion of layering multiple types of protection together. Hypothesis is that
 The bad things happened, can we get back on our feet. Assumption: bad things will happen in the system, so can we design things so we can get back working? Back it up!\newline
 \textbf{Password}\newline
 Humans can't remember good passwords.\newline
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.5]{assets/password.png}
+    \caption{Password.}
+\end{figure}
 Something you know. Password\newline
 Something you have. RSA token\newline
 Something you are. Fingerprint\newline
@@ -159,6 +164,65 @@ We want the inside to be inaccessible to an attacker. But what \textbf{sort} of 
 Lesson from safe: Security is economics. More security costs more. Standards often define security.\newline
 We've seen that laptop/desktop platforms grant application a lot of privilege. \newline
 \textbf{Thinking About Least Privilege}\newline When assessing the security of a system's design, identify the Trusted Computing Base(TCB). What components deos secuirty rely upon? Security requires that the TCB: correct, comlete(can't be bypassed) and secure(can't be tampered with). Best way to be assured of correctness and its security are KISS(Keep It Simple, Stupid) and Generally, Simple(Small). One powerfuldesign approach: privilege separation. Isolate privileged operations to as small a component as possible.
+\textbf{The Base for Isolation: The Operating Systems}\newline
+The operating systems process provide the following "guarentees".
+\itemnum
+    \ii Isolation: A process can not access(read or write) the memory of any other process.
+    \ii Premissions: A process can only change files etc if it has permission to 
+\itemend
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.5]{assets/browser_design.png}
+    \caption{Browser design.}
+\end{figure}
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.5]{assets/chrome_browser.png}
+    \caption{Chrome Browser design.}
+\end{figure}
+\begin{example}
+    Web Browser is an example of OS\newline
+    Drive-by malware: malicious web page expolitsd browser bug to infect local files. \newline 
+    The rendering engine is the part that interpreting programs so all the bugs live in rendering engine. So Chrome browser puts rendering engine into its own process. Goal: prevent "drive-by malware", where a malicious web page exploits a browser bug to infect local files. Now it sandboxes each web context so you can't even read out other web page content(E.g. spectre).
+\end{example}
+\textbf{Ensuring Complete Mediation}\newline
+To secure access to some capability/resource, construct a reference monitor. Single point through which all access must occur(E.g. a network firewall). \newline Desired properties:
+\itemnum
+    \ii Un-bypassable("complete mediation")
+    \ii Tamper-proof(is itself secure)
+    \ii Verifiable(correct)
+    \ii (Note, just restatements of what we want for TCBs)
+\itemend
+\textbf{Time of Check to TIme of Use, Vulnerability: Race Condition}\newline
+procedure withdrawl(w)
+\begin{enumerate}
+    \ii let b := balance
+    \ii if b $<$ w, abort
+    \ii set bbalance := b - w
+    \ii dispense \$w to user.
+\end{enumerate}
+Suppose that after step 2 here an attacker arranges to suspend first call, and calls withdrawl again concurrently.\newline
+TOCTTOU=Time of Check to Time of Use.\newline
+Ethereum is a cryptocurrency which offers "smart" contracts. The DAO(Distributed Autonomous Organization was an attempt to make a distributed mutual fund in Ethereum). Participants could vote on investments that should be made. The DAO supported withdrawals as well. To withdraw, the code was check the balance, then send the money, then decrement the balance. But sending money in Ethereum can send to another program written by the recipient. So someone "invested" then did a withdraw to this program which would initiate another withdraw.\newline 
+\textbf{Separation of responsibility}
+Example: Cinema, two-man rule in nuclear bunker.
+\subsection{Summary}
+\textbf{Notions Regarding Managing Privilege}:\newline
+\itemnum
+    \ii Least privilege: The notion of avoiding having unnecessary privileges.
+    \ii Privilege separation: A way to achieve least privilege by isolating access to privileges to a small Trusted Computing Base(TCB)
+    \ii Separation of responsibility: If you need to have a privilege, consider requiring multiple parties to work together(collude) to exercise it
+\itemend
+\textbf{Dealing with Users}\newline
+\itemnum
+    \ii Psycholofical acceptability: Will users abide a security mechanism, or decide to subvert it?
+    \ii Consider human factors: Does a security mechanism assume something abouyt human behavior when interacting with the system that might not hold, even in the absence of conscious decisions by the uses to subvert
+\itemend
+Ouvrage Schoenenbourg. Only as secure as the weakest link. A door lock is only as strong as the window.\newline
+Don't rely on \textbf{security through obscurity}. Security through obscurity (STO) is a process of implementing security within a system by enforcing secrecy and confidentiality of the system's internal design architecture. Security through obscurity aims to secure a system by deliberately hiding or concealing its security flaws. Obscurity does help but you need to design you system so that it fails. Kerckhoffs's Principle: A cryptosystem should be secure even if everything about the system, except the key, is public knowledge. Shannon's Maxim: The enemy knows the system.\newline
+\textbf{Trusted path}. Users need to know they are talking with legit system. System needs to know its talking with the legit user. These channels need to be unspoofable and private. ATM skimmers are a failure of the trusted path.\newline
+\textbf{"Use fail-safe defaults."} But it can often be hard to determine. Default for access here is reasonable. Deny all except for an allowed user list. But when the power goes out. Should the lock fail shut/open?\newline
+\textbf{Common Assumptions When Discussing Attacks} Attackers can interact with our systems \textbf{without particular noise}. Probing(poking at systems) may go unnoticed even if highly repetitive, leading to crashes, and easy to detect. It’s easy for attackers to know general information about their targets, OS types, software versions, usernames, server ports, IP addresses, usual patterns of activity, administrative procedures. Attackers can obtain access to a copy of a given system to measure and/or determine how it work. Attackers can make energetic use of automation, they can often find clever ways to automate. Attackers can pull off complicated coordination across a bunch of different elements/systems. Attackers can bring large resources to bear if req’d, computation, network capacity, but they are not super-powerful. If it helps the attacker in some way, \textbf{assume they can obtain privileges} But if the privilege gives everything away (attack becomes trivial), then we care about unprivileged attacks. The ability to robustly detect that an attack has occurred \textbf{does not replace desirability of preventing}. Infrastructure machines/systems are well protected (hard to directly take over). So a vulnerability that requires infrastructure compromise is less worrisome than same vulnerability that doesn’t. Network routing is hard to alter … other than with physical access near clients (e.g., “wifi/coffeeshop”). Such access helps fool clients to send to wrong place. Can enable Man-in-the-Middle (MITM) attacks. We worry about attackers who are lucky. Since often automation/repetition can help “make luck”: If its 1 in a million, just try a million times! Just because a system does not have apparent value, \textbf{it may still be a targe}. Attackers are mostly undaunted by fear of getting caught.
 \section{Appendix}
 \renewcommand{\listtheoremname}{List of Definitions and Theorems}
 \listoftheorems[ignoreall,show={theorem,definition}]
